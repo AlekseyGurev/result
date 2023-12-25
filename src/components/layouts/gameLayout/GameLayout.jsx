@@ -11,12 +11,12 @@ export const GameLayout = (props) => {
 			<Title />
 			<div className={styles.container}>
 				<Information
-					isDraw={props.isDraw}
-					isGameEnded={props.isGameEnded}
+					isDraw={props.draw}
+					isGameEnded={props.win}
 					currentPlayer={props.currentPlayer}
 				/>
 				<Field {...props} />
-				{props.isGameEnded || props.isDraw ? (
+				{props.win || props.draw ? (
 					<Button type={'submit'} handleClickReset={props.handleClickReset}>
 						{'Новая игра'}
 					</Button>

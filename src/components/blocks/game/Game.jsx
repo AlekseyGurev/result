@@ -1,42 +1,50 @@
 import { GameLayout } from '../../layouts/gameLayout/GameLayout';
 import { useState } from 'react';
+import { field as initialField } from '../../../constants/constants';
+import { isDraw, isWin } from '../../../utils/utils';
 
 export const Game = () => {
 	const [currentPlayer, setCurrentPlayer] = useState('X');
-	const [isGameEnded, setIsGameEnded] = useState(false);
-	const [isDraw, setIsDraw] = useState(false);
-	const [field, setField] = useState(['', '', '', '', '', '', '', '', '']);
-
-	const WIN_PATTERNS = [
-		[0, 1, 2],
-		[3, 4, 5],
-		[6, 7, 8],
-		[0, 3, 6],
-		[1, 4, 7],
-		[2, 5, 8],
-		[0, 4, 8],
-		[2, 4, 6],
-	];
+	const [win, setWin] = useState(false);
+	const [draw, setDraw] = useState(false);
+	const [field, setField] = useState(initialField);
 
 	const handleClickReset = () => {
-		setIsGameEnded(false);
-		setIsDraw(false);
+		setWin(false);
+		setDraw(false);
 		setField(['', '', '', '', '', '', '', '', '']);
 		setCurrentPlayer('X');
+	};
+
+	const handleClick = (index) => {
+		if (field[index] || win || draw) return;
+
+		const editField = field.map((cell, idx) =>
+			idx === index ? currentPlayer : cell,
+		);
+
+		setField(editField);
+
+		if (isWin(editField, currentPlayer)) {
+			setWin(true);
+			return;
+		}
+		if (isDraw(editField)) {
+			setDraw(true);
+			return;
+		}
+
+		setCurrentPlayer((prev) => (prev === 'X' ? '0' : 'X'));
 	};
 
 	return (
 		<GameLayout
 			currentPlayer={currentPlayer}
-			isGameEnded={isGameEnded}
-			isDraw={isDraw}
+			win={win}
+			draw={draw}
 			field={field}
-			setCurrentPlayer={setCurrentPlayer}
-			setIsGameEnded={setIsGameEnded}
-			setIsDraw={setIsDraw}
-			setField={setField}
-			WIN_PATTERNS={WIN_PATTERNS}
 			handleClickReset={handleClickReset}
+			handleClick={handleClick}
 		/>
 	);
 };
