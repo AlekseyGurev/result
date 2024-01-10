@@ -89,7 +89,6 @@ export const RegisterForm = () => {
 			formData.password === repeatPasswordRef.current
 		) {
 			setIsChecked(false);
-			// submitButtonRef.current.focus();
 		} else {
 			setIsChecked(true);
 		}
