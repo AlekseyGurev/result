@@ -1,5 +1,5 @@
 import { RegisterFormLayout } from '../../index';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import * as validation from '../../../utils/validationSchema';
 import { sendFormData } from '../../../utils/sendFromData';
 
@@ -16,6 +16,10 @@ export const RegisterForm = () => {
 	const repeatPasswordRef = useRef('');
 	const submitButtonRef = useRef('');
 	const [isChecked, setIsChecked] = useState(true);
+
+	useEffect(() => {
+		!isChecked && submitButtonRef.current.focus();
+	}, [isChecked]);
 
 	const onEmailChange = ({ target }) => {
 		setFormData({
@@ -75,7 +79,6 @@ export const RegisterForm = () => {
 			formData.password === repeatPasswordRef.current
 		) {
 			setIsChecked(false);
-			// submitButtonRef.current.focus();
 		} else {
 			setIsChecked(true);
 		}
