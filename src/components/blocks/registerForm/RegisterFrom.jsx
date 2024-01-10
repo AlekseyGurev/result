@@ -55,7 +55,7 @@ export const RegisterForm = () => {
 		let newError = null;
 		if (formData.password !== repeatPasswordRef.current) {
 			newError = 'Пароли не совпадают';
-			repeatPasswordRef.current.focus();
+			// repeatPasswordRef.current.focus();
 		}
 		setRepeatPasswordError(newError);
 		checkedForm();
@@ -86,7 +86,7 @@ export const RegisterForm = () => {
 			formData.password === repeatPasswordRef.current
 		) {
 			setIsChecked(false);
-			submitButtonRef.current.focus();
+			// submitButtonRef.current.focus();
 		} else {
 			setIsChecked(true);
 		}
@@ -98,7 +98,6 @@ export const RegisterForm = () => {
 			loginError={emailError}
 			passwordError={passwordError}
 			onBlurPassword={onBlurPassword}
-			repeatPassword={repeatPasswordRef}
 			repeatPasswordError={repeatPasswordError}
 			onSubmit={onSubmit}
 			onLoginChange={onLoginChange}
