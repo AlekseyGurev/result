@@ -1,5 +1,5 @@
 import { RegisterFormLayout } from '../../index';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const sendFormData = (formData) => {
 	console.log(formData);
@@ -18,6 +18,10 @@ export const RegisterForm = () => {
 	const repeatPasswordRef = useRef('');
 	const submitButtonRef = useRef('');
 	const [isChecked, setIsChecked] = useState(true);
+
+	useEffect(() => {
+		!isChecked && submitButtonRef.current.focus();
+	}, [isChecked]);
 
 	const onLoginChange = ({ target }) => {
 		setFormData({
