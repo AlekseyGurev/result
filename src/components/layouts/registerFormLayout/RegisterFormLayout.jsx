@@ -3,7 +3,7 @@ import { Input } from '../../index';
 
 export const RegisterFormLayout = ({
 	formData,
-	loginError,
+	emailError,
 	passwordError,
 	repeatPasswordError,
 	onLoginChange,
@@ -13,7 +13,6 @@ export const RegisterFormLayout = ({
 	onBlurPassword,
 	isChecked,
 	submitButtonRef,
-	repeatPasswordRef,
 }) => {
 	const { email, password } = formData;
 	return (
@@ -26,7 +25,7 @@ export const RegisterFormLayout = ({
 					value={email}
 					placeholder={'Логин'}
 					onChange={onLoginChange}
-					error={loginError}
+					error={emailError}
 				/>
 				<Input
 					name={'password'}
@@ -43,7 +42,6 @@ export const RegisterFormLayout = ({
 					placeholder={'Повтор пароля'}
 					onChange={onRepeatPasswordChange}
 					error={repeatPasswordError}
-					repeatPasswordRef={repeatPasswordRef}
 				/>
 
 				<button
