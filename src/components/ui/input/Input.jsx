@@ -1,21 +1,11 @@
 import styles from './Input.module.css';
 import { Error } from '../error/Error';
 
-export const Input = ({
-	name,
-	type,
-	login,
-	onChange,
-	placeholder,
-	error,
-	onBlur,
-	repeatPasswordRef,
-}) => {
+export const Input = ({ name, type, login, onChange, placeholder, error, onBlur }) => {
 	return (
 		<>
 			{error && <Error>{error}</Error>}
 			<input
-				ref={repeatPasswordRef}
 				className={styles.field}
 				name={name}
 				type={type}

@@ -13,7 +13,6 @@ export const RegisterFormLayout = ({
 	onBlurPassword,
 	isChecked,
 	submitButtonRef,
-	repeatPasswordRef,
 }) => {
 	const { email, password } = formData;
 	return (
@@ -24,7 +23,7 @@ export const RegisterFormLayout = ({
 					name={'email'}
 					type={'text'}
 					value={email}
-					placeholder={'Логин'}
+					placeholder={'Email'}
 					onChange={onLoginChange}
 					error={loginError}
 				/>
@@ -43,7 +42,6 @@ export const RegisterFormLayout = ({
 					placeholder={'Повтор пароля'}
 					onChange={onRepeatPasswordChange}
 					error={repeatPasswordError}
-					repeatPasswordRef={repeatPasswordRef}
 				/>
 
 				<button

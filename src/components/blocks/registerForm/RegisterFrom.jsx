@@ -1,9 +1,7 @@
 import { RegisterFormLayout } from '../../index';
 import { useState, useRef } from 'react';
-
-const sendFormData = (formData) => {
-	console.log(formData);
-};
+import * as validation from '../../../utils/validationSchema';
+import { sendFormData } from '../../../utils/sendFromData';
 
 export const RegisterForm = () => {
 	const [formData, setFormData] = useState({
@@ -19,15 +17,15 @@ export const RegisterForm = () => {
 	const submitButtonRef = useRef('');
 	const [isChecked, setIsChecked] = useState(true);
 
-	const onLoginChange = ({ target }) => {
+	const onEmailChange = ({ target }) => {
 		setFormData({
 			...formData,
 			email: target.value,
 		});
-		let newError = null;
-		if (!/.+@.+\..+/i.test(target.value)) {
-			newError = 'Неверный формат email';
-		}
+		const newError = validation.validateAndGetErrorMessage(
+			validation.emailChangeSchema,
+			target.value,
+		);
 		setEmailError(newError);
 		checkedForm();
 	};
@@ -37,38 +35,29 @@ export const RegisterForm = () => {
 			...formData,
 			password: target.value,
 		});
-		let newError = null;
-
-		if (!/^[\w_]*$/.test(target.value)) {
-			newError =
-				'Неверный пароль. Допустимые символы: буквы(латинские), цифры и нижнее подчёркивание';
-		} else if (target.value.length > 20) {
-			newError = 'Неверный пароль. Должно быть не больше 20 символов';
-		} else if (target.value.length < 3) {
-			newError = 'Неверный пароль. Должно быть больше 3 символов';
-		}
+		const newError = validation.validateAndGetErrorMessage(
+			validation.passwordChangeSchema,
+			target.value,
+		);
 		setPasswordError(newError);
 		checkedForm();
 	};
 
 	const onBlurPassword = () => {
-		let newError = null;
-		if (formData.password !== repeatPasswordRef.current) {
-			newError = 'Пароли не совпадают';
-			repeatPasswordRef.current.focus();
-		}
+		const newError = validation.validateAndGetErrorMessage(
+			validation.repeatPasswordChangeSchema,
+			formData.password !== repeatPasswordRef.current,
+		);
 		setRepeatPasswordError(newError);
 		checkedForm();
 	};
 
 	const onRepeatPasswordChange = ({ target }) => {
 		repeatPasswordRef.current = target.value;
-
-		let newError = null;
-		if (formData.password !== repeatPasswordRef.current) {
-			newError = 'Пароли не совпадают';
-		}
-
+		const newError = validation.validateAndGetErrorMessage(
+			validation.repeatPasswordChangeSchema,
+			formData.password !== repeatPasswordRef.current,
+		);
 		setRepeatPasswordError(newError);
 		checkedForm();
 	};
@@ -86,7 +75,7 @@ export const RegisterForm = () => {
 			formData.password === repeatPasswordRef.current
 		) {
 			setIsChecked(false);
-			submitButtonRef.current.focus();
+			// submitButtonRef.current.focus();
 		} else {
 			setIsChecked(true);
 		}
@@ -101,12 +90,11 @@ export const RegisterForm = () => {
 			repeatPassword={repeatPasswordRef}
 			repeatPasswordError={repeatPasswordError}
 			onSubmit={onSubmit}
-			onLoginChange={onLoginChange}
+			onLoginChange={onEmailChange}
 			onPasswordChange={onPasswordChange}
 			onRepeatPasswordChange={onRepeatPasswordChange}
 			isChecked={isChecked}
 			submitButtonRef={submitButtonRef}
-			repeatPasswordRef={repeatPasswordRef}
 		/>
 	);
 };
