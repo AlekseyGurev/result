@@ -3,7 +3,7 @@ import { Input } from '../../index';
 
 export const RegisterFormLayout = ({
 	formData,
-	loginError,
+	emailError,
 	passwordError,
 	repeatPasswordError,
 	onLoginChange,
@@ -25,7 +25,7 @@ export const RegisterFormLayout = ({
 					value={email}
 					placeholder={'Email'}
 					onChange={onLoginChange}
-					error={loginError}
+					error={emailError}
 				/>
 				<Input
 					name={'password'}

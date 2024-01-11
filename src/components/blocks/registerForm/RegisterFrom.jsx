@@ -79,7 +79,6 @@ export const RegisterForm = () => {
 			formData.password === repeatPasswordRef.current
 		) {
 			setIsChecked(false);
-			// submitButtonRef.current.focus();
 		} else {
 			setIsChecked(true);
 		}
@@ -88,7 +87,7 @@ export const RegisterForm = () => {
 	return (
 		<RegisterFormLayout
 			formData={formData}
-			loginError={emailError}
+			emailError={emailError}
 			passwordError={passwordError}
 			onBlurPassword={onBlurPassword}
 			repeatPassword={repeatPasswordRef}
