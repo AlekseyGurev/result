@@ -1,103 +1,116 @@
+import { useRef, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { RegisterFormLayout } from '../../index';
-import { useState, useRef, useEffect } from 'react';
-import * as validation from '../../../utils/validationSchema';
-import { sendFormData } from '../../../utils/sendFromData';
 
 export const RegisterForm = () => {
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
+	const {
+		register,
+		getValues,
+		setValue,
+		setError,
+		clearErrors,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		defaultValues: {
+			email: '',
+			password: '',
+			repeatPassword: '',
+		},
 	});
 
-	const [emailError, setEmailError] = useState(null);
-	const [passwordError, setPasswordError] = useState(null);
-	const [repeatPasswordError, setRepeatPasswordError] = useState(null);
+	const emailProps = {
+		required: {
+			value: true,
+			message: 'Поле не должно быть пустым',
+		},
+		pattern: {
+			value: /.+@.+\..+/i,
+			message: 'Неверный формат email',
+		},
+	};
 
-	const repeatPasswordRef = useRef('');
+	const passwordProps = {
+		required: {
+			value: true,
+			message: 'Неверный пароль. Должно быть не меньше 3 символов',
+		},
+		minLength: {
+			value: 3,
+			message: 'Неверный пароль. Должно быть не меньше 3 символов',
+		},
+		maxLength: {
+			value: 20,
+			message: 'Неверный пароль. Должно быть не больше 20 символов',
+		},
+		pattern: {
+			value: /^[\w_]*$/,
+			message:
+				'Неверный пароль. Допустимые символы: буквы(латинские), цифры и нижнее подчёркивание',
+		},
+	};
+
+	const repeatPasswordProps = {
+		required: {
+			value: true,
+			message: 'Неверный пароль. Должно быть не меньше 3 символов',
+		},
+	};
+
+	const emailError = errors.email?.message;
+	const passwordError = errors.password?.message;
+	const repeatPasswordError = errors.repeatPassword?.message;
+
 	const submitButtonRef = useRef('');
-	const [isChecked, setIsChecked] = useState(true);
+	const repeatPasswordRef = useRef('');
 
 	useEffect(() => {
-		!isChecked && submitButtonRef.current.focus();
-	}, [isChecked]);
+		getValues('email') !== '' &&
+			getValues('password') !== '' &&
+			Object.keys(errors).length === 0 &&
+			submitButtonRef.current.focus();
+	}, [getValues()]);
 
-	const onEmailChange = ({ target }) => {
-		setFormData({
-			...formData,
-			email: target.value,
-		});
-		const newError = validation.validateAndGetErrorMessage(
-			validation.emailChangeSchema,
-			target.value,
-		);
-		setEmailError(newError);
-		checkedForm();
-	};
-
-	const onPasswordChange = ({ target }) => {
-		setFormData({
-			...formData,
-			password: target.value,
-		});
-		const newError = validation.validateAndGetErrorMessage(
-			validation.passwordChangeSchema,
-			target.value,
-		);
-		setPasswordError(newError);
-		checkedForm();
-	};
-
-	const onBlurPassword = () => {
-		const newError = validation.validateAndGetErrorMessage(
-			validation.repeatPasswordChangeSchema,
-			formData.password !== repeatPasswordRef.current,
-		);
-		setRepeatPasswordError(newError);
-		checkedForm();
+	const setErrorRepeatPassword = () => {
+		if (getValues('password') !== repeatPasswordRef.current) {
+			setError('repeatPassword', {
+				type: 'custom',
+				message: 'Пароли не совпадают',
+			});
+		} else {
+			setValue('repeatPassword', repeatPasswordRef.current);
+			clearErrors('repeatPassword');
+		}
 	};
 
 	const onRepeatPasswordChange = ({ target }) => {
 		repeatPasswordRef.current = target.value;
-		const newError = validation.validateAndGetErrorMessage(
-			validation.repeatPasswordChangeSchema,
-			formData.password !== repeatPasswordRef.current,
-		);
-		setRepeatPasswordError(newError);
-		checkedForm();
+		setErrorRepeatPassword();
 	};
 
-	const onSubmit = (event) => {
-		event.preventDefault();
-		sendFormData(formData);
+	const onPasswordBlur = () => {
+		setErrorRepeatPassword();
 	};
 
-	const checkedForm = () => {
-		if (
-			formData.email !== '' &&
-			emailError === null &&
-			formData.password !== '' &&
-			formData.password === repeatPasswordRef.current
-		) {
-			setIsChecked(false);
-		} else {
-			setIsChecked(true);
-		}
+	const sendFormData = (formData) => {
+		console.log(formData);
 	};
 
 	return (
 		<RegisterFormLayout
-			formData={formData}
-			loginError={emailError}
-			passwordError={passwordError}
-			onBlurPassword={onBlurPassword}
-			repeatPassword={repeatPasswordRef}
-			repeatPasswordError={repeatPasswordError}
-			onSubmit={onSubmit}
-			onLoginChange={onEmailChange}
-			onPasswordChange={onPasswordChange}
+			emailError={emailError}
+			register={register}
+			onPasswordBlur={onPasswordBlur}
+			repeatPasswordRef={repeatPasswordRef}
 			onRepeatPasswordChange={onRepeatPasswordChange}
-			isChecked={isChecked}
 			submitButtonRef={submitButtonRef}
+			repeatPasswordError={repeatPasswordError}
+			passwordError={passwordError}
+			handleSubmit={handleSubmit(sendFormData)}
+			emailProps={emailProps}
+			passwordProps={passwordProps}
+			repeatPasswordProps={repeatPasswordProps}
+			errors={errors}
 		/>
 	);
 };

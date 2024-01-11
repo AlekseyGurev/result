@@ -2,53 +2,57 @@ import styles from './RegisterFormLayout.module.css';
 import { Input } from '../../index';
 
 export const RegisterFormLayout = ({
-	formData,
-	loginError,
-	passwordError,
-	repeatPasswordError,
-	onLoginChange,
-	onPasswordChange,
-	onRepeatPasswordChange,
-	onSubmit,
-	onBlurPassword,
-	isChecked,
+	emailError,
+	register,
+	onPasswordBlur,
+	repeatPasswordRef,
 	submitButtonRef,
+	repeatPasswordError,
+	passwordError,
+	handleSubmit,
+	onRepeatPasswordChange,
+	emailProps,
+	repeatPasswordProps,
+	passwordProps,
+	errors,
 }) => {
-	const { email, password } = formData;
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>Форма регистрации</h1>
-			<form onSubmit={onSubmit}>
+			<form onSubmit={handleSubmit}>
 				<Input
 					name={'email'}
 					type={'text'}
-					value={email}
 					placeholder={'Email'}
-					onChange={onLoginChange}
-					error={loginError}
+					register={register}
+					formProp={emailProps}
+					error={emailError}
 				/>
 				<Input
 					name={'password'}
 					type={'password'}
-					value={password}
 					placeholder={'Пароль'}
-					onChange={onPasswordChange}
-					onBlur={onBlurPassword}
+					register={register}
+					onPasswordBlur={onPasswordBlur}
+					formProp={passwordProps}
 					error={passwordError}
 				/>
 				<Input
 					name={'repeatPassword'}
 					type={'password'}
 					placeholder={'Повтор пароля'}
-					onChange={onRepeatPasswordChange}
+					register={register}
+					formProp={repeatPasswordProps}
+					repeatPasswordRef={repeatPasswordRef}
+					onRepeatPasswordChange={onRepeatPasswordChange}
 					error={repeatPasswordError}
 				/>
 
 				<button
 					ref={submitButtonRef}
 					className={styles.button}
+					disabled={Object.keys(errors).length > 0}
 					type="submit"
-					disabled={isChecked}
 				>
 					Зарегистрироваться
 				</button>
