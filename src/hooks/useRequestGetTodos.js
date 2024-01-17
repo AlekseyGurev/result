@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { request } from '../utilities';
+import { request } from '../utilities/utilities';
 
-const BASE_URL = 'https://jsonplaceholder.typicode.com/todos';
+const BASE_URL = 'http://localhost:3005/todos';
 
-export const useRequestGetTodos = () => {
+export const useRequestGetTodos = (refreshTodos) => {
 	const [todos, setTodos] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -12,6 +12,6 @@ export const useRequestGetTodos = () => {
 			.then((data) => setTodos(data))
 			.catch((error) => console.log(error))
 			.finally(() => setIsLoading(false));
-	}, []);
+	}, [refreshTodos]);
 	return { todos, isLoading };
 };
