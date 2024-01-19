@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
-import { request } from '../utilities/utilities';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../utilities/firebase';
 
-const BASE_URL = 'http://localhost:3005/todos';
-
-export const useRequestGetTodos = (refreshTodos) => {
+export const useRequestGetTodos = () => {
 	const [todos, setTodos] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		request(`${BASE_URL}`, { method: 'GET' })
-			.then((data) => setTodos(data))
-			.catch((error) => console.log(error))
-			.finally(() => setIsLoading(false));
-	}, [refreshTodos]);
+		const todosDbRef = ref(db, 'todos');
+		return onValue(todosDbRef, (snapshot) => {
+			const loadedTodos = snapshot.val() || {};
+			setTodos(loadedTodos);
+			setIsLoading(false);
+		});
+	}, []);
 	return { todos, isLoading };
 };

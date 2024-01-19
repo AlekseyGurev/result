@@ -1,29 +1,18 @@
 import { useState } from 'react';
-import { request, getRandomId } from '../utilities/utilities';
+import { ref, push } from 'firebase/database';
+import { db } from '../utilities/firebase';
 
-const BASE_URL = 'http://localhost:3005/todos';
-
-export const useRequestAddTodo = (
-	refreshTodos,
-	setRefreshTodos,
-	fieldInput,
-	setFieldInput,
-) => {
+export const useRequestAddTodo = (fieldInput, setFieldInput) => {
 	const [isCreating, setIsCreating] = useState(false);
-
 	const requestAddTodo = () => {
 		setIsCreating(true);
 
-		request(`${BASE_URL}`, {
-			method: 'POST',
-			body: JSON.stringify({
-				id: getRandomId(),
-				title: fieldInput,
-			}),
+		const todosDbRef = ref(db, 'todos');
+		push(todosDbRef, {
+			title: fieldInput,
 		})
-			.then((response) => {
-				console.log('Запись добавлена', response);
-				setRefreshTodos(!refreshTodos);
+			.then(() => {
+				console.log('Запись добавлена');
 				setFieldInput('');
 			})
 			.catch((error) => console.log(error))

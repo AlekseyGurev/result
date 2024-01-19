@@ -12,29 +12,21 @@ export const getRandomId = (min = 1, max = 10000) => {
 	return Math.floor(Math.random() * (max - min + 1) + min).toString();
 };
 
-export const sortArray = (todos) => {
-	return todos.slice().sort((a, b) => {
-		if (a.title > b.title) {
-			return 1;
-		}
-		if (a.title < b.title) {
-			return -1;
-		}
-		return 0;
-	});
-};
-
 export const sorting = (array) => {
-	return (
-		array &&
-		array.slice().sort((a, b) => {
-			if (a.title > b.title) {
-				return 1;
-			}
-			if (a.title < b.title) {
-				return -1;
-			}
-			return 0;
-		})
-	);
+	const newObject = {};
+	array &&
+		Object.entries(array)
+			.sort((a, b) => {
+				if (a[1].title > b[1].title) {
+					return 1;
+				}
+				if (a[1].title < b[1].title) {
+					return -1;
+				}
+				return 0;
+			})
+			.forEach((item) => {
+				newObject[item[0]] = item[1];
+			});
+	return newObject;
 };

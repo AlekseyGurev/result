@@ -1,22 +1,19 @@
 import { useState } from 'react';
-import { request } from '../utilities/utilities';
-const BASE_URL = 'http://localhost:3005/todos';
+import { ref, set } from 'firebase/database';
+import { db } from '../utilities/firebase';
 
-export const useRequestEditTodo = (refreshTodos, setRefreshTodos) => {
+export const useRequestEditTodo = () => {
 	const [isSaving, setIsSaving] = useState(false);
 
 	const requestEditTodo = (id, editTodo) => {
 		setIsSaving(true);
 
-		request(`${BASE_URL}/${id}`, {
-			method: 'PUT',
-			body: JSON.stringify({
-				title: editTodo,
-			}),
+		const todosDbRef = ref(db, `todos/${id}`);
+		set(todosDbRef, {
+			title: editTodo,
 		})
-			.then((response) => {
-				console.log('Запись обновлена', response);
-				setRefreshTodos(!refreshTodos);
+			.then(() => {
+				console.log('Запись обновлена');
 			})
 			.catch((error) => console.log(error))
 			.finally(() => setIsSaving(false));

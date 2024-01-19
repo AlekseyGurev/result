@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { request } from '../utilities/utilities';
+import { ref, remove } from 'firebase/database';
+import { db } from '../utilities/firebase';
 
-const BASE_URL = 'http://localhost:3005/todos';
-
-export const useRequestDeleteTodo = (refreshTodos, setRefreshTodos) => {
+export const useRequestDeleteTodo = () => {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const requestDeleteTodo = (id) => {
-		console.log(id);
 		setIsDeleting(true);
 
-		request(`${BASE_URL}/${id}`, {
-			method: 'DELETE',
-		})
+		const todosDbRef = ref(db, `todos/${id}`);
+
+		remove(todosDbRef)
 			.then(() => {
 				console.log('Запись удалена');
-				setRefreshTodos(!refreshTodos);
 			})
 			.catch((error) => console.log(error))
 			.finally(() => setIsDeleting(false));
