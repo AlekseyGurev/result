@@ -34,9 +34,11 @@ export const Todos = () => {
 	useEffect(() => {
 		let newTodos = [];
 		if (searchFieldRef.current.value !== '') {
-			todos.forEach((item) => {
-				item.title.includes(searchFieldRef.current.value) && newTodos.push(item);
-			});
+			todos &&
+				todos.forEach((item) => {
+					item.title.includes(searchFieldRef.current.value) &&
+						newTodos.push(item);
+				});
 			return isSortTodos ? setEditTodos(sorting(newTodos)) : setEditTodos(newTodos);
 		}
 		return isSortTodos ? setEditTodos(sorting(todos)) : setEditTodos(todos);
