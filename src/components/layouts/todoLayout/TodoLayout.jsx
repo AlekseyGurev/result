@@ -13,11 +13,25 @@ export const TodoLayout = (props) => {
 		setRefreshTodos,
 		onSortedClick,
 		isSortTodos,
+		searchField,
+		onFieldSearchChange,
+		searchFieldRef,
 	} = props;
 
 	return (
 		<section className={styles.container}>
 			<h1 className={styles.title}>Список дел</h1>
+			<div className={styles.containerSearch}>
+				<label htmlFor="search">Найти</label>
+				<input
+					ref={searchFieldRef}
+					className={styles.searchField}
+					id="search"
+					type="text"
+					value={searchField}
+					onChange={onFieldSearchChange}
+				/>
+			</div>
 			<div className={styles.containerInput}>
 				<AddTodo
 					fieldInput={fieldInput}
@@ -28,7 +42,6 @@ export const TodoLayout = (props) => {
 					onClickHandle={requestAddTodo}
 					disabledFlag={isCreating}
 				/>
-				<Button name={'Найти'} />
 			</div>
 			<div className={styles.containerFilters}>
 				<Button

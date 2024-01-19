@@ -13,6 +13,18 @@
 	text-align: center;
 }
 
+.containerSearch {
+	margin-bottom: 20px;
+	padding-right: 20px;
+	align-self: end;
+}
+
+.searchField {
+	margin-left: 5px;
+	border: 0.5px solid rgb(148, 140, 140);
+	border-radius: 4px;
+}
+
 .containerFilters {
 	padding-left: 20px;
 }

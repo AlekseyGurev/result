@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRequestDeleteTodo, useRequestEditTodo } from '../../index';
+import { useRequestDeleteTodo, useRequestEditTodo } from '../../../hooks/index';
 import { TodoItemLayout } from '../../index';
 
 export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
