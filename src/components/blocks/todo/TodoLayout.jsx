@@ -1,4 +1,6 @@
-import { TodoItem, AddTodo, Button } from '../../index';
+import { AddTodo, Button } from '../../index';
+import { Link } from 'react-router-dom';
+
 import styles from './TodoLayout.module.css';
 
 export const TodoLayout = (props) => {
@@ -9,8 +11,6 @@ export const TodoLayout = (props) => {
 		requestAddTodo,
 		fieldInput,
 		onFieldInputChange,
-		refreshTodos,
-		setRefreshTodos,
 		onSortedClick,
 		isSortTodos,
 		searchField,
@@ -60,13 +60,14 @@ export const TodoLayout = (props) => {
 					) : todos ? (
 						<ul>
 							{todos.map(({ id, title }) => (
-								<TodoItem
-									key={id}
-									id={id}
-									title={title}
-									refreshTodos={refreshTodos}
-									setRefreshTodos={setRefreshTodos}
-								/>
+								<li key={id} className={styles.todoItem}>
+									<Link
+										className={styles.todoItemLink}
+										to={`task/${id}`}
+									>
+										{title}
+									</Link>
+								</li>
 							))}
 						</ul>
 					) : (

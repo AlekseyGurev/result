@@ -1,6 +1,5 @@
 .container {
 	display: flex;
-
 	flex-direction: column;
 	width: 600px;
 	margin: 0 auto;
@@ -64,4 +63,21 @@
 .error {
 	text-align: center;
 	color: #ff0000;
+}
+
+.todoItem {
+	width: 70%;
+	margin-bottom: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.todoItem:hover {
+	cursor: pointer;
+}
+
+.todoItemLink {
+	color: #000000;
+	text-decoration: none;
 }

@@ -1,4 +1,5 @@
 import { Button } from '../../ui/button/Button';
+import { NotFound } from '../notFound/NotFound';
 import styles from './TodoItemLayout.module.css';
 
 export const TodoItemLayout = ({
@@ -12,11 +13,16 @@ export const TodoItemLayout = ({
 	onEditClick,
 	isDeleting,
 	onDeleteClick,
+	onBackButtonClick,
+	isLoading,
 }) => {
-	return (
-		<li className={styles.container}>
+	return isLoading ? (
+		<div className={styles.loader}></div>
+	) : !isLoading ? (
+		<div className={styles.card}>
+			<Button name={'Назад'} onClickHandle={onBackButtonClick} />
 			{isEditFlag ? (
-				<>
+				<div className={styles.container}>
 					<input
 						className={styles.edit}
 						type="text"
@@ -30,9 +36,9 @@ export const TodoItemLayout = ({
 						onClickHandle={onEditSaveClick}
 						itemsButton={true}
 					/>
-				</>
+				</div>
 			) : (
-				<>
+				<div className={styles.container}>
 					<p className={styles.title}>{title}</p>
 					<Button
 						name={'Изменить'}
@@ -45,8 +51,10 @@ export const TodoItemLayout = ({
 						onClickHandle={onDeleteClick}
 						itemsButton={true}
 					/>
-				</>
+				</div>
 			)}
-		</li>
+		</div>
+	) : (
+		<NotFound />
 	);
 };

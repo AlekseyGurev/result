@@ -2,9 +2,10 @@ import { TodoLayout } from '../../index';
 import { useRequestGetTodos, useRequestAddTodo } from '../../../hooks/index';
 import { useState, useRef, useEffect } from 'react';
 import { sorting } from '../../../utilities/utilities';
+import { useRefreshTodos } from '../../../hooks';
 
 export const Todos = () => {
-	const [refreshTodos, setRefreshTodos] = useState(false);
+	const { refreshTodos, setRefreshTodos } = useRefreshTodos();
 	const [searchField, setSearchField] = useState('');
 	const [fieldInput, setFieldInput] = useState('');
 	const [isSortTodos, setIsSortTodos] = useState(false);
@@ -42,7 +43,7 @@ export const Todos = () => {
 			return isSortTodos ? setEditTodos(sorting(newTodos)) : setEditTodos(newTodos);
 		}
 		return isSortTodos ? setEditTodos(sorting(todos)) : setEditTodos(todos);
-	}, [todos, searchField, isSortTodos]);
+	}, [todos, searchField, isSortTodos, refreshTodos]);
 
 	return (
 		<TodoLayout
@@ -52,8 +53,6 @@ export const Todos = () => {
 			isCreating={isCreating}
 			fieldInput={fieldInput}
 			onFieldInputChange={onFieldInputChange}
-			refreshTodos={refreshTodos}
-			setRefreshTodos={setRefreshTodos}
 			onSortedClick={onSortedClick}
 			isSortTodos={isSortTodos}
 			searchField={searchField}

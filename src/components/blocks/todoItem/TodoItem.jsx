@@ -1,10 +1,27 @@
 import { useState } from 'react';
-import { useRequestDeleteTodo, useRequestEditTodo } from '../../../hooks/index';
+import {
+	useRequestGetTodo,
+	useRequestDeleteTodo,
+	useRequestEditTodo,
+} from '../../../hooks/index';
 import { TodoItemLayout } from '../../index';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useRefreshTodos } from '../../../hooks';
 
-export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
+export const TodoItem = () => {
 	const [isEditFlag, setEditFlag] = useState(false);
 	const [editTodo, setEditTodo] = useState('');
+	const { refreshTodos, setRefreshTodos } = useRefreshTodos();
+
+	const { id } = useParams();
+
+	const navigate = useNavigate();
+
+	const { todo, isLoading } = useRequestGetTodo(id, refreshTodos);
+
+	const goToBack = () => {
+		navigate(-1);
+	};
 
 	const { isDeleting, requestDeleteTodo } = useRequestDeleteTodo(
 		refreshTodos,
@@ -34,11 +51,17 @@ export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
 	};
 	const onEditClick = () => {
 		setEditFlag(true);
-		setEditTodo(title);
+		setEditTodo(todo.title);
 	};
+
+	const onBackButtonClick = () => {
+		goToBack();
+	};
+
 	return (
 		<TodoItemLayout
-			title={title}
+			isLoading={isLoading}
+			title={todo.title}
 			editTodo={editTodo}
 			isEditFlag={isEditFlag}
 			onDeleteClick={onDeleteClick}
@@ -48,6 +71,7 @@ export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
 			onEditSaveClick={onEditSaveClick}
 			onEditTodoChange={onEditTodoChange}
 			onEditTodoBlur={onEditTodoBlur}
+			onBackButtonClick={onBackButtonClick}
 		/>
 	);
 };
