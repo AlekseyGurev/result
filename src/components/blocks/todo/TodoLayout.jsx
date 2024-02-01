@@ -17,7 +17,7 @@ export const TodoLayout = (props) => {
 		onFieldSearchChange,
 		searchFieldRef,
 	} = props;
-
+	console.log(todos);
 	return (
 		<>
 			{isLoading ? (
@@ -55,9 +55,7 @@ export const TodoLayout = (props) => {
 							isSortTodos={isSortTodos}
 						/>
 					</div>
-					{isLoading ? (
-						<div className={styles.loader}></div>
-					) : todos ? (
+					{todos ? (
 						<ul>
 							{todos.map(({ id, title }) => (
 								<li key={id} className={styles.todoItem}>
