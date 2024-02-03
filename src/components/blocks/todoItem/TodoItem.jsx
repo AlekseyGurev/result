@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRequestDeleteTodo, useRequestEditTodo } from '../../../hooks/index';
 import { TodoItemLayout } from '../../index';
+import { AppContext } from '../../../context/context';
 
-export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
+export const TodoItem = ({ id, title }) => {
 	const [isEditFlag, setEditFlag] = useState(false);
 	const [editTodo, setEditTodo] = useState('');
+	const { refreshTodos, setRefreshTodos } = useContext(AppContext);
 
 	const { isDeleting, requestDeleteTodo } = useRequestDeleteTodo(
 		refreshTodos,

@@ -9,8 +9,6 @@ export const TodoLayout = (props) => {
 		requestAddTodo,
 		fieldInput,
 		onFieldInputChange,
-		refreshTodos,
-		setRefreshTodos,
 		onSortedClick,
 		isSortTodos,
 		searchField,
@@ -60,13 +58,7 @@ export const TodoLayout = (props) => {
 					) : todos ? (
 						<ul>
 							{todos.map(({ id, title }) => (
-								<TodoItem
-									key={id}
-									id={id}
-									title={title}
-									refreshTodos={refreshTodos}
-									setRefreshTodos={setRefreshTodos}
-								/>
+								<TodoItem key={id} id={id} title={title} />
 							))}
 						</ul>
 					) : (
