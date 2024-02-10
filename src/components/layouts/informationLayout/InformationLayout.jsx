@@ -1,19 +1,15 @@
 import styles from './InformationLayout.module.css';
-import PropTypes from 'prop-types';
+import { store } from '../../../store/store';
 
-export const InformationLayout = ({ isGameEnded, isDraw, children }) => {
+export const InformationLayout = ({ children }) => {
+	const { draw, win } = store.getState().game;
 	return (
 		<p
-			className={`${styles.information} ${isGameEnded ? styles.green : null} ${
-				isDraw ? styles.yellow : null
+			className={`${styles.information} ${win ? styles.green : null} ${
+				draw ? styles.yellow : null
 			}`}
 		>
 			{children}
 		</p>
 	);
-};
-
-InformationLayout.propTypes = {
-	isDraw: PropTypes.bool,
-	isGameEnded: PropTypes.bool,
 };

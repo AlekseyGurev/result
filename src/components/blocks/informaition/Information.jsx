@@ -1,24 +1,15 @@
 import { InformationLayout } from '../../layouts/informationLayout/InformationLayout';
-import PropTypes from 'prop-types';
+import { store } from '../../../store/store';
 
-export const Information = ({ isDraw, isGameEnded, currentPlayer }) => {
+export const Information = () => {
+	const { draw, win, currentPlayer } = store.getState().game;
 	let result = '';
-	if (isDraw) {
+	if (draw) {
 		result = 'Ничья';
-	} else if (!isDraw && isGameEnded) {
+	} else if (!draw && win) {
 		result = `Победа: ${currentPlayer}`;
-	} else if (!isDraw && !isGameEnded) {
+	} else if (!draw && !win) {
 		result = `Ходит: ${currentPlayer}`;
 	}
-	return (
-		<InformationLayout isDraw={isDraw} isGameEnded={isGameEnded}>
-			{result}
-		</InformationLayout>
-	);
-};
-
-Information.propTypes = {
-	isDraw: PropTypes.bool,
-	isGameEnded: PropTypes.bool,
-	currentPlayer: PropTypes.string,
+	return <InformationLayout>{result}</InformationLayout>;
 };

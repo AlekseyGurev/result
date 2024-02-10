@@ -1,9 +1,10 @@
 import { Button } from '../../ui/button/Button';
 import styles from './FieldLayout.module.css';
-import PropTypes from 'prop-types';
 import { getPath } from '../../../utils/utils';
+import { store } from '../../../store/store';
 
-export const FieldLayout = ({ field, handleClick }) => {
+export const FieldLayout = ({ handleClick }) => {
+	const { field } = store.getState().game;
 	return (
 		<div className={styles.container}>
 			{field.map((cell, index) => (
@@ -19,9 +20,4 @@ export const FieldLayout = ({ field, handleClick }) => {
 			))}
 		</div>
 	);
-};
-
-FieldLayout.propTypes = {
-	field: PropTypes.array,
-	handleClick: PropTypes.func,
 };
