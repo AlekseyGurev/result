@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import User from './components/user/User';
+import ControlPanel from './components/controlPanel/ControlPanel';
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<>
-			<div></div>
+			<User />
+			<ControlPanel />
 		</>
 	);
 }
