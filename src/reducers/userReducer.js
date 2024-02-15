@@ -16,6 +16,13 @@ export const userReducer = (state = initialUserState, action) => {
 				...state,
 				age: initialUserState.age,
 			};
+		case 'CHANGE_USER': {
+			return {
+				...state,
+				name: action.payload.name,
+				age: action.payload.age,
+			};
+		}
 
 		default:
 			return state;
