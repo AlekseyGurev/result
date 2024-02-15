@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { request, getRandomId } from '../utilities/utilities';
+import { useDispatch } from 'react-redux';
+import { setIsRefresh } from '../actions';
 
 const BASE_URL = 'http://localhost:3005/todos';
 
-export const useRequestAddTodo = (
-	refreshTodos,
-	setRefreshTodos,
-	fieldInput,
-	setFieldInput,
-) => {
+export const useRequestAddTodo = (fieldInput, setFieldInput) => {
 	const [isCreating, setIsCreating] = useState(false);
+	const dispatch = useDispatch();
 
 	const requestAddTodo = () => {
 		setIsCreating(true);
@@ -23,7 +21,7 @@ export const useRequestAddTodo = (
 		})
 			.then((response) => {
 				console.log('Запись добавлена', response);
-				setRefreshTodos(!refreshTodos);
+				dispatch(setIsRefresh);
 				setFieldInput('');
 			})
 			.catch((error) => console.log(error))

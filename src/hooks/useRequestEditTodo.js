@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { request } from '../utilities/utilities';
+import { useDispatch } from 'react-redux';
+import { setIsRefresh } from '../actions';
 const BASE_URL = 'http://localhost:3005/todos';
 
 export const useRequestEditTodo = (refreshTodos, setRefreshTodos) => {
 	const [isSaving, setIsSaving] = useState(false);
+	const dispatch = useDispatch();
 
 	const requestEditTodo = (id, editTodo) => {
 		setIsSaving(true);
@@ -16,7 +19,7 @@ export const useRequestEditTodo = (refreshTodos, setRefreshTodos) => {
 		})
 			.then((response) => {
 				console.log('Запись обновлена', response);
-				setRefreshTodos(!refreshTodos);
+				dispatch(setIsRefresh);
 			})
 			.catch((error) => console.log(error))
 			.finally(() => setIsSaving(false));

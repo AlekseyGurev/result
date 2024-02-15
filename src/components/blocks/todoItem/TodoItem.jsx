@@ -2,19 +2,13 @@ import { useState } from 'react';
 import { useRequestDeleteTodo, useRequestEditTodo } from '../../../hooks/index';
 import { TodoItemLayout } from '../../index';
 
-export const TodoItem = ({ id, title, refreshTodos, setRefreshTodos }) => {
+export const TodoItem = ({ id, title, setRefreshTodos }) => {
 	const [isEditFlag, setEditFlag] = useState(false);
 	const [editTodo, setEditTodo] = useState('');
 
-	const { isDeleting, requestDeleteTodo } = useRequestDeleteTodo(
-		refreshTodos,
-		setRefreshTodos,
-	);
+	const { isDeleting, requestDeleteTodo } = useRequestDeleteTodo();
 
-	const { isSaving, requestEditTodo } = useRequestEditTodo(
-		refreshTodos,
-		setRefreshTodos,
-	);
+	const { isSaving, requestEditTodo } = useRequestEditTodo();
 
 	const onDeleteClick = () => {
 		requestDeleteTodo(id);

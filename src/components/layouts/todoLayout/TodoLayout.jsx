@@ -1,22 +1,23 @@
 import { TodoItem, AddTodo, Button } from '../../index';
 import styles from './TodoLayout.module.css';
+import { selectIsLoading } from '../../../selectors';
+import { useSelector } from 'react-redux';
 
 export const TodoLayout = (props) => {
 	const {
 		todos,
-		isLoading,
 		isCreating,
 		requestAddTodo,
 		fieldInput,
 		onFieldInputChange,
-		refreshTodos,
-		setRefreshTodos,
 		onSortedClick,
 		isSortTodos,
 		searchField,
 		onFieldSearchChange,
 		searchFieldRef,
 	} = props;
+
+	const isLoading = useSelector(selectIsLoading);
 
 	return (
 		<>
@@ -60,13 +61,7 @@ export const TodoLayout = (props) => {
 					) : todos ? (
 						<ul>
 							{todos.map(({ id, title }) => (
-								<TodoItem
-									key={id}
-									id={id}
-									title={title}
-									refreshTodos={refreshTodos}
-									setRefreshTodos={setRefreshTodos}
-								/>
+								<TodoItem key={id} id={id} title={title} />
 							))}
 						</ul>
 					) : (

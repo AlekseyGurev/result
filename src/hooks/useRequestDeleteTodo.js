@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { request } from '../utilities/utilities';
+import { useDispatch } from 'react-redux';
+import { setIsRefresh } from '../actions';
 
 const BASE_URL = 'http://localhost:3005/todos';
 
-export const useRequestDeleteTodo = (refreshTodos, setRefreshTodos) => {
+export const useRequestDeleteTodo = () => {
 	const [isDeleting, setIsDeleting] = useState(false);
+	const dispatch = useDispatch();
 
 	const requestDeleteTodo = (id) => {
 		console.log(id);
@@ -15,7 +18,7 @@ export const useRequestDeleteTodo = (refreshTodos, setRefreshTodos) => {
 		})
 			.then(() => {
 				console.log('Запись удалена');
-				setRefreshTodos(!refreshTodos);
+				dispatch(setIsRefresh);
 			})
 			.catch((error) => console.log(error))
 			.finally(() => setIsDeleting(false));
