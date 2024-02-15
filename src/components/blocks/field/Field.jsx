@@ -1,11 +1,12 @@
 import { FieldLayout } from '../../layouts/fieldLayout/FieldLayout';
 import { changePLayer, setField, setWin, setDraw } from '../../../store/gameSlice';
-import { isDraw, isWin } from '../../../utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
+import { isDraw, isWin } from '../../../utils/utils';
 
 export const Field = () => {
 	const { draw, win, currentPlayer, field } = useSelector((state) => state.game);
 	const dispatch = useDispatch();
+
 	const handleClick = (index) => {
 		if (field[index] || win || draw) return;
 
