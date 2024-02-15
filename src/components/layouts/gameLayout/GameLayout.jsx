@@ -3,14 +3,15 @@ import { Information } from '../../blocks/informaition/Information';
 import { Button } from '../../ui/button/Button';
 import { Title } from '../../ui/title/Title';
 import styles from './GameLayout.module.css';
-import { store } from '../../../store/store';
 import { resetGame } from '../../../store/gameSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const GameLayout = () => {
-	const { draw, win } = store.getState().game;
+	const dispatch = useDispatch();
+	const { draw, win } = useSelector((state) => state.game);
 
 	const handleClickReset = () => {
-		store.dispatch(resetGame());
+		dispatch(resetGame());
 	};
 	return (
 		<section className={styles.game}>

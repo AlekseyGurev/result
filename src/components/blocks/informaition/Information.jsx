@@ -1,8 +1,8 @@
 import { InformationLayout } from '../../layouts/informationLayout/InformationLayout';
-import { store } from '../../../store/store';
+import { useSelector } from 'react-redux';
 
 export const Information = () => {
-	const { draw, win, currentPlayer } = store.getState().game;
+	const { draw, win, currentPlayer } = useSelector((state) => state.game);
 	let result = '';
 	if (draw) {
 		result = 'Ничья';

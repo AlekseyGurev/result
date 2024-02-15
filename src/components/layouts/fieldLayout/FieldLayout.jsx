@@ -1,10 +1,10 @@
 import { Button } from '../../ui/button/Button';
 import styles from './FieldLayout.module.css';
 import { getPath } from '../../../utils/utils';
-import { store } from '../../../store/store';
+import { useSelector } from 'react-redux';
 
 export const FieldLayout = ({ handleClick }) => {
-	const { field } = store.getState().game;
+	const { field } = useSelector((state) => state.game);
 	return (
 		<div className={styles.container}>
 			{field.map((cell, index) => (

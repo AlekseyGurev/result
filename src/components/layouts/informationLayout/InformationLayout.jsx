@@ -1,8 +1,8 @@
 import styles from './InformationLayout.module.css';
-import { store } from '../../../store/store';
+import { useSelector } from 'react-redux';
 
 export const InformationLayout = ({ children }) => {
-	const { draw, win } = store.getState().game;
+	const { draw, win } = useSelector((state) => state.game);
 	return (
 		<p
 			className={`${styles.information} ${win ? styles.green : null} ${
