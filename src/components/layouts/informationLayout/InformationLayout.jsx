@@ -1,4 +1,3 @@
-import styles from './InformationLayout.module.css';
 import { Component } from 'react';
 export class InformationLayout extends Component {
 	constructor(props) {
@@ -8,9 +7,9 @@ export class InformationLayout extends Component {
 	render() {
 		return (
 			<p
-				className={`${styles.information} ${
-					this.props.isGameEnded ? styles.green : null
-				} ${this.props.isDraw ? styles.yellow : null}`}
+				className={`information ${this.props.isGameEnded ? 'green' : null} ${
+					this.props.isDraw ? 'yellow' : null
+				}`}
 			>
 				{this.props.isDraw
 					? 'Ничья'

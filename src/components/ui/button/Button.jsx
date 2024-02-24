@@ -1,5 +1,3 @@
-import styles from './Button.module.css';
-
 import { Component } from 'react';
 
 export class Button extends Component {
@@ -10,7 +8,7 @@ export class Button extends Component {
 	render() {
 		return (
 			<button
-				className={this.props.type === 'game' ? styles.game : styles.submit}
+				className={this.props.type === 'game' ? 'game-button' : 'submit'}
 				onClick={
 					this.props.type === 'game'
 						? this.props.handleClick

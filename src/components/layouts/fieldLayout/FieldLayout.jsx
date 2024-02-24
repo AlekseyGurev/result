@@ -1,5 +1,4 @@
 import { Button } from '../../ui/button/Button';
-import styles from './FieldLayout.module.css';
 import { getPath } from '../../../utils/utils';
 import { connect } from 'react-redux';
 import { Component } from 'react';
@@ -29,7 +28,7 @@ class FieldLayout extends Component {
 
 	render() {
 		return (
-			<div className={styles.container}>
+			<div className="container-fields">
 				{this.props.field.map((cell, index) => (
 					<Button
 						type={'game'}
