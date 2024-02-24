@@ -1,19 +1,23 @@
 import styles from './InformationLayout.module.css';
-import PropTypes from 'prop-types';
+import { Component } from 'react';
+export class InformationLayout extends Component {
+	constructor(props) {
+		super(props);
+	}
 
-export const InformationLayout = ({ isGameEnded, isDraw, children }) => {
-	return (
-		<p
-			className={`${styles.information} ${isGameEnded ? styles.green : null} ${
-				isDraw ? styles.yellow : null
-			}`}
-		>
-			{children}
-		</p>
-	);
-};
-
-InformationLayout.propTypes = {
-	isDraw: PropTypes.bool,
-	isGameEnded: PropTypes.bool,
-};
+	render() {
+		return (
+			<p
+				className={`${styles.information} ${
+					this.props.isGameEnded ? styles.green : null
+				} ${this.props.isDraw ? styles.yellow : null}`}
+			>
+				{this.props.isDraw
+					? 'Ничья'
+					: this.props.isGameEnded
+						? `Победа ${this.props.currentPlayer}`
+						: `Ходит ${this.props.currentPlayer}`}
+			</p>
+		);
+	}
+}
